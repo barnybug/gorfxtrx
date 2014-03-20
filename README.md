@@ -1,5 +1,7 @@
 ## gorfxtrx
 
+[![Build Status](https://travis-ci.org/barnybug/gorfxtrx.svg?branch=master)](https://travis-ci.org/barnybug/gorfxtrx)
+
 Go library for the RFXcom RFXtrx433 USB transceiver:
 
 http://www.rfxcom.com/store/Transceivers/12103
@@ -40,7 +42,7 @@ func main() {
             continue
         }
 
-        fmt.Println("Received", ev)
+        fmt.Println("Received", packet)
     }
     dev.Close()
 }
