@@ -45,7 +45,6 @@ func (self *Device) Read() (Packet, error) {
 			time.Sleep(time.Millisecond * 200)
 			continue
 		}
-		log.Println("Read: ", i, err, buf[:i])
 		if err != nil {
 			return nil, err
 		}
@@ -54,20 +53,18 @@ func (self *Device) Read() (Packet, error) {
 		}
 		offset := i
 		for remain := int(buf[0]) + 1 - i; remain > 0; remain -= i {
-			log.Println("Remain:", remain)
 			i, err = self.ser.Read(buf[offset:])
 			if i == 0 && err == io.EOF {
 				time.Sleep(time.Millisecond * 200)
 				continue
 			}
-			log.Println("RRead: ", i, err, buf[offset:offset+i])
 			if err != nil {
 				return nil, err
 			}
 			offset += i
 		}
 
-		log.Println("Received:", buf[0:offset])
+		// log.Println("Received:", buf[0:offset])
 		return Parse(buf[0:offset])
 	}
 }
