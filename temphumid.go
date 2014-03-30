@@ -7,7 +7,7 @@ import (
 
 // Struct for the TempHumid packets
 type TempHumid struct {
-	TypeId         byte
+	typeId         byte
 	SequenceNumber byte
 	id             uint16
 	Temp           float64
@@ -17,7 +17,7 @@ type TempHumid struct {
 	Rssi           byte
 }
 
-var TempHumidTypes = map[byte]string{
+var tempHumidTypes = map[byte]string{
 	0x01: "THGN122/123, THGN132, THGR122/228/238/268",
 	0x02: "THGR810, THGN800",
 	0x03: "RTGR328",
@@ -30,7 +30,7 @@ var TempHumidTypes = map[byte]string{
 }
 
 func (self *TempHumid) Receive(data []byte) {
-	self.TypeId = data[2]
+	self.typeId = data[2]
 	self.SequenceNumber = data[3]
 	self.id = binary.BigEndian.Uint16(data[4:6])
 	t := binary.BigEndian.Uint16(data[6:8])
@@ -45,10 +45,12 @@ func (self *TempHumid) Receive(data []byte) {
 	self.Rssi = data[10] >> 4
 }
 
+// Id of the device.
 func (self *TempHumid) Id() string {
 	return fmt.Sprintf("%02x:%02x", self.id>>8, self.id&0xff)
 }
 
+// Type of the device.
 func (self *TempHumid) Type() string {
-	return TempHumidTypes[self.TypeId]
+	return tempHumidTypes[self.typeId]
 }

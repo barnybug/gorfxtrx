@@ -5,9 +5,9 @@ import (
 	"fmt"
 )
 
-// Struct for the Temp packets
+// Struct for the Temp packets.
 type Temp struct {
-	TypeId         byte
+	typeId         byte
 	SequenceNumber byte
 	id             uint16
 	Temp           float64
@@ -15,7 +15,7 @@ type Temp struct {
 	Rssi           byte
 }
 
-var TempTypes = map[byte]string{
+var tempTypes = map[byte]string{
 	0x01: "THR128/138, THC138",
 	0x02: "THC238/268,THN132,THWR288,THRN122,THN122,AW129/131",
 	0x03: "THWR800",
@@ -29,7 +29,7 @@ var TempTypes = map[byte]string{
 }
 
 func (self *Temp) Receive(data []byte) {
-	self.TypeId = data[2]
+	self.typeId = data[2]
 	self.SequenceNumber = data[3]
 	self.id = binary.BigEndian.Uint16(data[4:6])
 	t := binary.BigEndian.Uint16(data[6:8])
@@ -42,10 +42,12 @@ func (self *Temp) Receive(data []byte) {
 	self.Rssi = data[8] >> 4
 }
 
+// Id of the device.
 func (self *Temp) Id() string {
 	return fmt.Sprintf("%02x:%02x", self.id>>8, self.id&0xff)
 }
 
+// Type of the device.
 func (self *Temp) Type() string {
-	return TempTypes[self.TypeId]
+	return tempTypes[self.typeId]
 }

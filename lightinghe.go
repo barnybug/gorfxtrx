@@ -7,9 +7,9 @@ import (
 	"strconv"
 )
 
-// Struct for the Homeeasy lighting packets
+// Struct for Homeeasy lighting packets.
 type LightingHE struct {
-	TypeId         byte
+	typeId         byte
 	SequenceNumber byte
 	HouseCode      uint32
 	UnitCode       byte
@@ -17,13 +17,13 @@ type LightingHE struct {
 	Level          byte
 }
 
-var LightingHETypes = map[byte]string{
+var lightingHETypes = map[byte]string{
 	0x00: "AC",
 	0x01: "HomeEasy EU",
 	0x02: "ANSLUT",
 }
 
-var LightingHECommands = map[byte]string{
+var lightingHECommands = map[byte]string{
 	0x00: "off",
 	0x01: "on",
 	0x02: "set level",
@@ -32,7 +32,7 @@ var LightingHECommands = map[byte]string{
 	0x05: "set group level",
 }
 
-var LightingHECommandBytes = reverseByteStringMap(LightingHECommands)
+var lightingHECommandBytes = reverseByteStringMap(lightingHECommands)
 
 func NewLightingHE(typeId byte, id string, command string) (*LightingHE, error) {
 	if len(id) != 8 {
@@ -47,15 +47,15 @@ func NewLightingHE(typeId byte, id string, command string) (*LightingHE, error) 
 		return nil, err
 	}
 	return &LightingHE{
-		TypeId:    typeId,
+		typeId:    typeId,
 		HouseCode: uint32(houseCode),
 		UnitCode:  byte(unitCode),
-		command:   LightingHECommandBytes[command],
+		command:   lightingHECommandBytes[command],
 	}, nil
 }
 
 func (self *LightingHE) Receive(data []byte) {
-	self.TypeId = data[2]
+	self.typeId = data[2]
 	self.SequenceNumber = data[3]
 	self.HouseCode = binary.BigEndian.Uint32(data[4:8])
 	self.UnitCode = data[8]
@@ -63,20 +63,23 @@ func (self *LightingHE) Receive(data []byte) {
 	self.Level = data[10]
 }
 
+// Type of the device.
 func (self *LightingHE) Type() string {
-	return LightingHETypes[self.TypeId]
+	return lightingHETypes[self.typeId]
 }
 
+// Id of the device.
 func (self *LightingHE) Id() string {
 	return fmt.Sprintf("%07x%1x", self.HouseCode, self.UnitCode)
 }
 
+// Command transmitted.
 func (self *LightingHE) Command() string {
-	return LightingHECommands[self.command]
+	return lightingHECommands[self.command]
 }
 
 func (self *LightingHE) Send() []byte {
-	b := []byte{0x0b, 0x11, self.TypeId, self.SequenceNumber,
+	b := []byte{0x0b, 0x11, self.typeId, self.SequenceNumber,
 		0, 0, 0, 0, self.UnitCode, self.command, self.Level, 0}
 	binary.BigEndian.PutUint32(b[4:8], self.HouseCode)
 	return b

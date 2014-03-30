@@ -2,19 +2,19 @@ package gorfxtrx
 
 import "errors"
 
-// Interface representing a received packet
+// Interface representing a received packet.
 type Packet interface {
 	// Deserialize packet from wire format
 	Receive(data []byte)
 }
 
-// Interface representing a sendable packet
+// Interface representing a transmittable packet.
 type OutPacket interface {
 	// Serialize packet to wire format
 	Send() []byte
 }
 
-// Parse a packet from a byte array
+// Parse a packet from a byte array.
 func Parse(data []byte) (Packet, error) {
 	if data[0] == 0 {
 		// ignore the empty packet - not an error

@@ -12,7 +12,7 @@ func ExampleStatus() {
 	// {TranceiverType:83 FirmwareVersion:62}
 	fmt.Println(status.TypeString())
 	// 433.92MHz
-	fmt.Println(status.Devices())
+	fmt.Println(status.Protocols())
 	// [ac arc hideki homeeasy lacrosse oregon x10]
 }
 
@@ -56,7 +56,7 @@ func ExampleLightingX10() {
 	fmt.Println(lighting.Id())
 	fmt.Println(lighting.Command())
 	//Output:
-	// {TypeId:0 SequenceNumber:42 HouseCode:69 UnitCode:5 command:1}
+	// {typeId:0 SequenceNumber:42 HouseCode:69 UnitCode:5 command:1}
 	// X10 lighting
 	// e05
 	// on
@@ -77,7 +77,7 @@ func ExampleLightingHE() {
 	fmt.Println(lighting.Id())
 	fmt.Println(lighting.Command())
 	//Output:
-	// {TypeId:0 SequenceNumber:42 HouseCode:19088743 UnitCode:5 command:2 Level:8}
+	// {typeId:0 SequenceNumber:42 HouseCode:19088743 UnitCode:5 command:2 Level:8}
 	// AC
 	// 12345675
 	// set level
@@ -106,7 +106,7 @@ func ExampleTemp() {
 	fmt.Printf("%+v\n", temp.Id())
 	fmt.Printf("%+v\n", temp.Type())
 	//Output:
-	// {TypeId:2 SequenceNumber:42 id:38403 Temp:-32.1 Battery:90 Rssi:7}
+	// {typeId:2 SequenceNumber:42 id:38403 Temp:-32.1 Battery:90 Rssi:7}
 	// 96:03
 	// THC238/268,THN132,THWR288,THRN122,THN122,AW129/131
 }
@@ -118,7 +118,7 @@ func ExampleTempHumid() {
 	fmt.Printf("%+v\n", temp.Id())
 	fmt.Printf("%+v\n", temp.Type())
 	//Output:
-	// {TypeId:1 SequenceNumber:42 id:38403 Temp:-32.1 Humidity:96 HumidityStatus:3 Battery:90 Rssi:7}
+	// {typeId:1 SequenceNumber:42 id:38403 Temp:-32.1 Humidity:96 HumidityStatus:3 Battery:90 Rssi:7}
 	// 96:03
 	// THGN122/123, THGN132, THGR122/228/238/268
 }
@@ -130,7 +130,7 @@ func ExampleWind() {
 	fmt.Println(wind.Id())
 	fmt.Println(wind.Type())
 	//Output:
-	// {data:[16 86 1 3 47 0 0 247 0 32 0 36 1 96 0 0 89] TypeId:1 SequenceNumber:3 id:12032 Direction:247 AverageSpeed:3.2 Gust:3.6 Battery:90 Rssi:5}
+	// {data:[16 86 1 3 47 0 0 247 0 32 0 36 1 96 0 0 89] typeId:1 SequenceNumber:3 id:12032 Direction:247 AverageSpeed:3.2 Gust:3.6 Battery:90 Rssi:5}
 	// 2f:00
 	// WTGR800
 }

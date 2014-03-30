@@ -8,7 +8,7 @@ func reverseByteStringMap(m map[byte]string) map[string]byte {
 	return ret
 }
 
-func decode_flags(v byte, words []string) []string {
+func decodeFlags(v byte, words []string) []string {
 	s := []string{}
 	for _, w := range words {
 		if v%2 == 1 {
