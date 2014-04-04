@@ -134,3 +134,15 @@ func ExampleWind() {
 	// 2f:00
 	// WTGR800
 }
+
+func ExampleRain() {
+	x, _ := Parse([]byte{0x0b, 0x55, 0x02, 0x03, 0x12, 0x34, 0x02, 0x50, 0x01, 0x23, 0x45, 0x57})
+	rain := *x.(*Rain)
+	fmt.Printf("%+v\n", rain)
+	fmt.Println(rain.Id())
+	fmt.Println(rain.Type())
+	//Output:
+	// {typeId:2 SequenceNumber:3 id:4660 RainRate:5.92 RainTotal:7456.5 Battery:70 Rssi:5}
+	// 12:34
+	// PCR800
+}

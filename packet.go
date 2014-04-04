@@ -53,6 +53,11 @@ func Parse(data []byte) (Packet, error) {
 			return nil, errors.New("Packet too short")
 		}
 		pkt = &TempHumid{}
+	case 0x55:
+		if dlen != 11 {
+			return nil, errors.New("Packet too short")
+		}
+		pkt = &Rain{}
 	case 0x56:
 		if dlen != 16 {
 			return nil, errors.New("Packet too short")
