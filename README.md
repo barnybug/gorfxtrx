@@ -31,7 +31,7 @@ import (
 )
 
 func main() {
-    dev, err := gorfxtrx.Open("/dev/serial/by-id/usb-RFXCOM-...")
+    dev, err := gorfxtrx.Open("/dev/serial/by-id/usb-RFXCOM-...", true)
     if err != nil {
         panic("Error opening device")
     }

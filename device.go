@@ -23,7 +23,7 @@ Example usage:
 	)
 
 	func main() {
-	    dev, err := gorfxtrx.Open("/dev/serial/by-id/usb-RFXCOM-...")
+	    dev, err := gorfxtrx.Open("/dev/serial/by-id/usb-RFXCOM-...", true)
 	    if err != nil {
 	        panic("Error opening device")
 	    }
@@ -52,19 +52,25 @@ import (
 
 // Device representing the serial connection to the USB device.
 type Device struct {
-	ser io.ReadWriteCloser
+	ser   io.ReadWriteCloser
+	debug bool
 }
 
 // Open the device at the given path.
-func Open(path string) (*Device, error) {
-	dev := Device{}
+func Open(path string, debug bool) (*Device, error) {
+	dev := Device{debug: debug}
 
 	c := &serial.Config{Name: path, Baud: 38400}
 	ser, err := serial.OpenPort(c)
 	if err != nil {
 		return nil, err
 	}
-	dev.ser = ser
+
+	if debug {
+		dev.ser = LogReadWriteCloser{ser}
+	} else {
+		dev.ser = ser
+	}
 
 	log.Println("Sending reset")
 	reset, _ := NewReset()
