@@ -116,7 +116,6 @@ func (self *Device) Read() (Packet, error) {
 			offset += i
 		}
 
-		// log.Println("Received:", buf[0:offset])
 		return Parse(buf[0:offset])
 	}
 }

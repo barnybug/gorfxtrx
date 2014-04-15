@@ -28,7 +28,7 @@ func Parse(data []byte) (Packet, error) {
 	var pkt Packet
 	switch data[1] {
 	case 0x01:
-		if dlen != 13 {
+		if dlen != 10 {
 			return nil, errors.New("Packet too short")
 		}
 		pkt = &Status{}
