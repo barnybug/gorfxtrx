@@ -20,7 +20,7 @@ func ExampleShortBytes() {
 	_, err := Parse([]byte{0x0d, 0x01, 0x00, 0x01, 0x02, 0x53, 0x3e, 0x00, 0x0c, 0x2f, 0x01, 0x01, 0x00})
 	fmt.Println(err)
 	//Output:
-	// Packet too short
+	// Packet unexpected length: 12 != 13
 }
 
 func ExampleShortData() {

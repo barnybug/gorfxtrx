@@ -1,6 +1,9 @@
 package gorfxtrx
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 // Interface representing a received packet.
 type Packet interface {
@@ -22,7 +25,7 @@ func Parse(data []byte) (Packet, error) {
 	}
 	dlen := len(data) - 1
 	if int(data[0]) != dlen {
-		return nil, errors.New("Packet too short")
+		return nil, errors.New(fmt.Sprintf("Packet unexpected length: %d != %d", dlen, int(data[0])))
 	}
 
 	var pkt Packet

@@ -91,7 +91,8 @@ func (self *Device) Close() {
 func (self *Device) Read() (Packet, error) {
 	buf := make([]byte, 257)
 	for {
-		i, err := self.ser.Read(buf)
+		// read length
+		i, err := self.ser.Read(buf[0:1])
 		if i == 0 && err == io.EOF {
 			// empty read, sleep a bit recheck
 			time.Sleep(time.Millisecond * 200)
@@ -103,9 +104,12 @@ func (self *Device) Read() (Packet, error) {
 		if i == 0 {
 			continue
 		}
-		offset := i
-		for remain := int(buf[0]) + 1 - i; remain > 0; remain -= i {
-			i, err = self.ser.Read(buf[offset:])
+
+		// read rest of data
+		l := int(buf[0])
+		buf = buf[0 : l+1]
+		for read := 0; read < l; read += i {
+			i, err = self.ser.Read(buf[read+1:])
 			if i == 0 && err == io.EOF {
 				time.Sleep(time.Millisecond * 200)
 				continue
@@ -113,10 +117,10 @@ func (self *Device) Read() (Packet, error) {
 			if err != nil {
 				return nil, err
 			}
-			offset += i
 		}
 
-		return Parse(buf[0:offset])
+		// parse packet
+		return Parse(buf)
 	}
 }
 
