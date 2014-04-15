@@ -120,7 +120,11 @@ func (self *Device) Read() (Packet, error) {
 		}
 
 		// parse packet
-		return Parse(buf)
+		packet, err := Parse(buf)
+		if self.debug {
+			log.Printf("Parse(%#v) = (%#v, %v)\n", buf, packet, err)
+		}
+		return packet, err
 	}
 }
 
