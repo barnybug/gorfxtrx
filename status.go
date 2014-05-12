@@ -33,8 +33,8 @@ func (self *Status) TypeString() string {
 // Protocols enabled for the device.
 func (self *Status) Protocols() []string {
 	devs := []string{}
-	devs = extend(devs, decodeFlags(self.data[7]/0x80, []string{"undecoded"}))
-	devs = extend(devs, decodeFlags(self.data[8], []string{"mertik", "lightwarerf", "hideki", "lacrosse", "fs20", "proguard"}))
+	devs = extend(devs, decodeFlags(self.data[7], []string{"ae blyss", "rubicson", "fineoffset/viking", "lighting4", "rsl", "byron sx", "rfu6", "edisplay"}))
+	devs = extend(devs, decodeFlags(self.data[8], []string{"mertik", "lightwarerf", "hideki", "lacrosse", "fs20", "proguard", "blindst0", "blindst1"}))
 	devs = extend(devs, decodeFlags(self.data[9], []string{"x10", "arc", "ac", "homeeasy", "ikeakoppla", "oregon", "ati", "visonic"}))
 	sort.Strings(devs)
 	return devs
