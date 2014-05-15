@@ -27,7 +27,7 @@ func ExampleShortData() {
 	_, err := Parse([]byte{0x01, 0x01})
 	fmt.Println(err)
 	//Output:
-	// Packet too short
+	// Status packet too short
 }
 
 func ExampleStatusSend() {
@@ -97,6 +97,18 @@ func ExampleLightingHESend() {
 	//Output:
 	// <nil>
 	// [11 17 0 0 0 2 164 30 6 1 0 0]
+}
+
+func ExampleChime() {
+	x, _ := Parse([]byte{0x07, 0x16, 0x00, 0x06, 0x00, 0x7a, 0x01, 0x70})
+	chime := *x.(*Chime)
+	fmt.Printf("%+v\n", chime)
+	fmt.Printf("%+v\n", chime.Id())
+	fmt.Printf("%+v\n", chime.Type())
+	//Output:
+	// {typeId:0 SequenceNumber:6 id:122 Chime:1 Battery:0 Rssi:7}
+	// 00:7a
+	// Byron SX
 }
 
 func ExampleTemp() {
