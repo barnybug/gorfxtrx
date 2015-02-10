@@ -1,6 +1,7 @@
 ## gorfxtrx
 
 [![Build Status](https://travis-ci.org/barnybug/gorfxtrx.svg?branch=master)](https://travis-ci.org/barnybug/gorfxtrx)
+[![GoDoc](https://godoc.org/github.com/barnybug/gorfxtrx?status.svg)](http://godoc.org/github.com/barnybug/gorfxtrx)
 
 Go library for the RFXcom RFXtrx433 USB transceiver:
 
