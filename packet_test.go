@@ -5,15 +5,12 @@ import (
 )
 
 func ExampleStatus() {
-	x, _ := Parse([]byte{0x0d, 0x01, 0x00, 0x01, 0x02, 0x53, 0x3e, 0x00, 0x0c, 0x2f, 0x01, 0x01, 0x00, 0x00})
+	pkt, err := Parse([]byte{0x14, 0x01, 0x00, 0x01, 0x03, 0x53, 0x09, 0x20, 0x00, 0x2f, 0x00, 0x01, 0x01, 0x1c, 0x01, 0x00, 0x049, 0x00, 0x00, 0x00, 0x00})
+	fmt.Printf("%v\n", pkt)
+	fmt.Println(err)
 	//Output:
-	status := *x.(*Status)
-	fmt.Printf("%+v\n", status)
-	// {TranceiverType:83 FirmwareVersion:62}
-	fmt.Println(status.TypeString())
-	// 433.92MHz
-	fmt.Println(status.Protocols())
-	// [ac arc hideki homeeasy lacrosse oregon x10]
+	// Status: type: 433.92MHz transceiver: 83 firmware: 9 protocols: ac, arc, byron sx, homeeasy, oregon, x10
+	// <nil>
 }
 
 func ExampleShortBytes() {
@@ -27,7 +24,7 @@ func ExampleShortData() {
 	_, err := Parse([]byte{0x01, 0x01})
 	fmt.Println(err)
 	//Output:
-	// Status packet incorrect length, expected: 13 actual: 1
+	// Status packet incorrect length, expected: 20 actual: 1
 }
 
 func ExampleStatusSend() {
