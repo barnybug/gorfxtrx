@@ -44,6 +44,15 @@ func ExampleResetSend() {
 	// [13 0 0 0 0 0 0 0 0 0 0 0 0 0]
 }
 
+func ExampleTransmitAck() {
+	pkt, err := Parse([]byte{0x04, 0x02, 0x01, 0x00, 0x00})
+	fmt.Printf("%v\n", pkt)
+	fmt.Println(err)
+	//Output:
+	// TransmitAck: ACK
+	// <nil>
+}
+
 func ExampleLightingX10() {
 	x, _ := Parse([]byte{0x07, 0x10, 0x00, 0x2a, 0x45, 0x05, 0x01, 0x70})
 	lighting := *x.(*LightingX10)
