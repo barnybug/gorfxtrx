@@ -17,6 +17,10 @@ var States = map[uint8]string{
 	255: "UNKNOWN",
 }
 
+func (self *TransmitAck) OK() bool {
+	return self.State < 2
+}
+
 func (self *TransmitAck) Receive(data []byte) {
 	// 04 02 01 00 00
 	self.Subtype = data[2]
