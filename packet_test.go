@@ -27,15 +27,13 @@ func ExampleShortData() {
 	_, err := Parse([]byte{0x01, 0x01})
 	fmt.Println(err)
 	//Output:
-	// Status packet too short
+	// Status packet incorrect length, expected: 13 actual: 1
 }
 
 func ExampleStatusSend() {
-	p, err := NewStatus()
-	fmt.Println(err)
+	p := &Status{}
 	fmt.Println(p.Send())
 	//Output:
-	// <nil>
 	// [13 0 0 1 2 0 0 0 0 0 0 0 0 0]
 }
 
@@ -157,4 +155,11 @@ func ExampleRain() {
 	// {typeId:2 SequenceNumber:3 id:4660 RainRate:5.92 RainTotal:7456.5 Battery:70 Rssi:5}
 	// 12:34
 	// PCR800
+}
+
+func ExampleUnknown() {
+	pkt, _ := Parse([]byte{0x01, 0xFF})
+	fmt.Printf("%+v\n", pkt)
+	//Output:
+	// Unknown: 01ff
 }
