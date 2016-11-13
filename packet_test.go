@@ -1,6 +1,7 @@
 package gorfxtrx
 
 import (
+	"encoding/hex"
 	"fmt"
 )
 
@@ -152,6 +153,16 @@ func ExampleRain() {
 	// {typeId:2 SequenceNumber:3 id:4660 RainRate:5.92 RainTotal:7456.5 Battery:70 Rssi:5}
 	// 12:34
 	// PCR800
+}
+
+func ExampleOwl180() {
+	data, _ := hex.DecodeString("115a02028782000000010100000000849069") // 257 W 151 Wh
+	pkt, err := Parse(data)
+	fmt.Printf("%v\n", pkt)
+	fmt.Println(err)
+	//Output:
+	// Power id: 8782 power: 257W total: 151.73Wh signal: 6 battery: 9
+	// <nil>
 }
 
 func ExampleUnknown() {
