@@ -19,6 +19,10 @@ type Chime struct {
 
 var chimeTypes = map[byte]string{
 	0x00: "Byron SX",
+	0x01: "Byron MP001",
+	0x02: "Easy Chime",
+	0x03: "RFU",
+	0x04: "Envivo",
 }
 
 func NewChime(typeId byte, id string, chime byte) (*Chime, error) {
